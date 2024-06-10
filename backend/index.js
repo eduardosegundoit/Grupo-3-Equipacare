@@ -24,7 +24,7 @@ app.get('/produto/', async (req, res) => {
     totalDeLavadorasTermo
   } = req.query
 
-const resultado = calcularValores(
+  const resultado = calcularValores(
     parseFloat(salaCirugia),
     parseFloat(cirugiasPorSala),
     processamentoDeTecidos === 'true',
