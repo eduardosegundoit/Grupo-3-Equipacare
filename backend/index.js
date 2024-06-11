@@ -34,7 +34,8 @@ app.get('/produto/', async (req, res) => {
     parseFloat(leitoInternacaoRPA),
     parseFloat(totalDeAutoclaves),
     parseFloat(totalDeLavadorasTermo)
-  );
+  )
+
   return res.status(200).json(resultado)
 })
 
