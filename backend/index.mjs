@@ -1,7 +1,7 @@
-const express = require('express')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
 
-const { calcularValores } = require('./Fcalc')
+import { calcularValores } from './Fcalc.mjs';
 
 const PORT = process.env.PORT || 3000
 
