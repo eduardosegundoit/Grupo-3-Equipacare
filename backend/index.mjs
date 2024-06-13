@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { calcularValores } from './Fcalc.mjs';
+import { calcularValores } from './calculos/calcularValores.mjs';
 
 const PORT = process.env.PORT || 3000
 
@@ -12,22 +12,31 @@ app.use(cors())
 
 /*[Rota para retornar produto]*/
 app.get('/produto/', async (req, res) => {
-  const {
-    salaCirugia,
-    cirugiasPorSala,
-    processamentoDeTecidos,
-    dia,
-    cme,
-    leitoUTI,
-    leitoInternacaoRPA,
-    totalDeAutoclaves,
-    totalDeLavadorasTermo
-  } = req.query
+  // const {
+  //   salaCirugia,
+  //   cirugiasPorSala,
+  //   processamentoDeTecidos,
+  //   dia,
+  //   cme,
+  //   leitoUTI,
+  //   leitoInternacaoRPA,
+  //   totalDeAutoclaves,
+  //   totalDeLavadorasTermo
+  // } = req.query
+  const salaCirugia = 12;
+  const cirugiasPorSala = 6;
+  const processamentoDeTecidos = true;
+  const dia = 7;
+  const cme = 12;
+  const leitoUTI = 30;
+  const leitoInternacaoRPA = 149;
+  const totalDeAutoclaves = 3;
+  const totalDeLavadorasTermo = 2;
 
   const resultado = calcularValores(
     parseFloat(salaCirugia),
     parseFloat(cirugiasPorSala),
-    processamentoDeTecidos === 'true',
+    processamentoDeTecidos,
     parseFloat(dia),
     parseFloat(cme),
     parseFloat(leitoUTI),
