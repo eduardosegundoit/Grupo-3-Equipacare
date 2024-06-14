@@ -1,97 +1,47 @@
-const lavadoraTermodesinfectora = () => {
-  const marca = 'A';
-  const modelo = 'a1';
+const lavadoraTermodesinfectora = (
+  estimativaDeVolumeTotalDiarioPorMaterial,
+  cirugiasPorDia,
+  leitoUTI,
+  totalDeLavadorasTermo,
 
-  // Volume Total da Câmara [litros]
-  const volumeTotalCamaraLitros = '';
+  marca,
+  modelo,
+  volumeTotalCamaraLitros,
+  capacidadeCargaBandejasInstrumentos,
+  capacidadeCargaTraqueias,
+  tempoMedioCicloInstrumentosCargaMaximaMin,
+  tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin
+) => {
+  const producaoUesInstrumentosDia = estimativaDeVolumeTotalDiarioPorMaterial
+  const numeroCirurgiasDia = cirugiasPorDia
+  const numeroLeitosUti = leitoUTI
 
-  // Capacidade de Carga de Bandejas de Instrumentos (número de bandejas)
-  const capacidadeCargaBandejasInstrumentos = '';
+  const numeroBandejasPorUe = 2 // talvez esteja no DB-Mongo
+  const capacidadeProcessamentoUeCargaInstrumentos = capacidadeCargaBandejasInstrumentos / numeroBandejasPorUe
+  const numeroCiclosNecessariosDiariamenteInstrumentos = producaoUesInstrumentosDia / capacidadeProcessamentoUeCargaInstrumentos
+  const intervaloMedioEntreCiclos = 10 // talvez esteja no DB-Mongo
 
-  // Capacidade de Carga Traquéias (60cm + 120cm)
-  const capacidadeCargaTraqueias = '';
+  const tempoNecessarioProcessarDemandaInstrumentosMin = numeroCiclosNecessariosDiariamenteInstrumentos * (tempoMedioCicloInstrumentosCargaMaximaMin + intervaloMedioEntreCiclos)
 
-  // Tempo Médio Ciclo Instrumentos com Carga Máxima [minutos]
-  const tempoMedioCicloInstrumentosCargaMaximaMin = '';
+  const quantidadeTraqueiasPorCirurgia = 3 // talvez esteja no DB-Mongo
+  const quantidadeTraqueiasPorDiaCirurgias = numeroCirurgiasDia * quantidadeTraqueiasPorCirurgia
+  const quantidadeTraqueiasPorLeitoUtiDia = 3 // talvez esteja no DB-Mongo
+  const quantidadeTraqueiasPorDiaUti = numeroLeitosUti * quantidadeTraqueiasPorLeitoUtiDia
+  const quantidadeTraqueiasPorDiaTotal = quantidadeTraqueiasPorDiaCirurgias + quantidadeTraqueiasPorDiaUti
 
-  // Tempo Médio Ciclo Assistência Ventilatória com Carga Máxima [minutos]
-  const tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin = '';
+  const numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria = quantidadeTraqueiasPorDiaTotal / capacidadeCargaTraqueias
+  const tempoNecessarioProcessarDemandaAssistenciaVentilatoriaMin = numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria * (tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin  + intervaloMedioEntreCiclos)
 
-  // Informações do Hospital
-  // Produção U.E's Instrumentos/dia
-  const producaoUesInstrumentosDia = '';
+  const demandaCiclosPorDia = numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria + numeroCiclosNecessariosDiariamenteInstrumentos
+  const demandaTempoPorDiaMin = tempoNecessarioProcessarDemandaInstrumentosMin + tempoNecessarioProcessarDemandaAssistenciaVentilatoriaMin
 
-  // Número de Cirurgias/dia
-  const numeroCirurgiasDia = '';
+  const minutosDisponiveisDiariamenteTodosEquipamentos = 60 * 24 * totalDeLavadorasTermo
+  const percentualUtilizacaoCapacidadeMaximaProcessamentoTermos = demandaTempoPorDiaMin / minutosDisponiveisDiariamenteTodosEquipamentos
+  const percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado = (percentualUtilizacaoCapacidadeMaximaProcessamentoTermos * 100)
 
-  // Número de Leitos UTI
-  const numeroLeitosUti = '';
+  const resultado = `${marca}, ${modelo}: ${parseInt(minutosDisponiveisDiariamenteTodosEquipamentos)}, ${percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado.toFixed(2)}%`
 
-  // Cálculo do número de ciclos diários para processar Instrumentos
-  const numeroCiclosDiariosProcessarInstrumentos = '';
-
-  // Número de Bandejas para cada U.E
-  const numeroBandejasPorUe = '';
-
-  // Capacidade de processamento de U.E em uma carga de Instrumentos
-  const capacidadeProcessamentoUeCargaInstrumentos = '';
-
-  // Número de ciclos necessários diariamente para instrumentos
-  const numeroCiclosNecessariosDiariamenteInstrumentos = '';
-
-  // Tempo Médio Ciclo Instrumentos com Carga Máxima [minutos]
-  const tempoMedioCicloInstrumentosCargaMaximaMin = '';
-
-  // Intervalo Médio entre ciclos
-  const intervaloMedioEntreCiclos = '';
-
-  // Tempo Necessário para Processar a Demanda de Instrumentos [minutos]
-  const tempoNecessarioProcessarDemandaInstrumentosMin = '';
-
-  // Cálculo do número de ciclos diários para processar Assis. Ventilatória
-  const numeroCiclosDiariosProcessarAssistenciaVentilatoria = '';
-
-  // Quantidade de Traqueias por Cirurgia* - considerando traqueias de 120 cm
-  const quantidadeTraqueiasPorCirurgia = '';
-
-  // Quantidade de Traqueias por dia (Cirurgias) - considerando traqueias de 120 cm
-  const quantidadeTraqueiasPorDiaCirurgias = '';
-
-  // Quantidade Traqueias por Leito UTI/Dia**
-  const quantidadeTraqueiasPorLeitoUtiDia = '';
-
-  // Quantidade de Traqueias por dia (UTI)
-  const quantidadeTraqueiasPorDiaUti = '';
-
-  // Quantidade de Traqueias por dia TOTAL
-  const quantidadeTraqueiasPorDiaTotal = '';
-
-  // Quantidade de ciclos necessários diariamente para Assist. Vent.
-  const numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria = '';
-
-  // Tempo Médio Ciclo Assistência Ventilatória com Carga Máxima [minutos]
-  const tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin = '';
-
-  // Intervalo Médio entre ciclos
-  const intervaloMedioEntreCiclos = '';
-
-  // Tempo Necessário para Processar a Demanda de Assist. Vent. [minutos]
-  const tempoNecessarioProcessarDemandaAssistenciaVentilatoriaMin = '';
-
-  // Demanda de Ciclos por Dia
-  const demandaCiclosPorDia = '';
-
-  // Demanda de Tempo por Dia [minutos]
-  const demandaTempoPorDiaMin = '';
-
-  // Quantidade de Termos Ofertadas no Projeto
-  const quantidadeTermosOfertadasProjeto = '';
-
-  // Minutos Disponíveis Diariamente Somando Todos os Equipamentos
-  const minutosDisponiveisDiariamenteTodosEquipamentos = '';
-
-  // Percentual de Utilização da Capacidade Máxima de Processamento das Termos (Dimensionamento) - Valor ideal < 90%
-  const percentualUtilizacaoCapacidadeMaximaProcessamentoTermos = '';
+  return resultado
 }
 
 export { lavadoraTermodesinfectora }

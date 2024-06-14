@@ -1,4 +1,4 @@
-import { autoclavesVapor } from './autoclavesVapor.mjs';
+import { marcasAutoclaves,  marcasLavadoraTermodesinfectora  } from './marcas.mjs'
 
 const calcularValores = (
   salaCirugia, // 12
@@ -26,15 +26,10 @@ const calcularValores = (
   const UE = 54
   const estimativaDeVolumeTotalDiarioUE = processamentoDeTecidos ? estimativaDeVolumeTotalDiarioPorMaterial * 2 : estimativaDeVolumeTotalDiarioPorMaterial
   const estimativaDeVolumeTotalDiarioLitros = estimativaDeVolumeTotalDiarioUE * UE
-  // return[
-  //   `Volume Total Diário - Cirurgias : ${volumeTotalDiarioSalasCirugiacas}`,
-  //   `Volume Total Diário - UTIs :${volumePorDiaDeLeitoUTI}*${leitoUTI}= ${volumeTotalPorDiaUTI}`,
-  //   `Volume Total Diário - Internação : ${volumeTotalDiarioInternacao}`,
-  //   `Estimativa Volume Total Diário por Material : ${estimativaDeVolumeTotalDiarioPorMaterial}`,
-  //   `ESTIMATIVA DE VOLUME TOTAL DIÁRIO UE: ${estimativaDeVolumeTotalDiarioUE}`,
-  //   `ESTIMATIVA DE VOLUME TOTAL DIÁRIO litros: ${estimativaDeVolumeTotalDiarioLitros}`,
-  // ]
-  return autoclavesVapor(estimativaDeVolumeTotalDiarioLitros, cme, totalDeAutoclaves)
+
+  const autoclave = marcasAutoclaves(estimativaDeVolumeTotalDiarioLitros, cme, totalDeAutoclaves)
+  const lavadora =  marcasLavadoraTermodesinfectora(estimativaDeVolumeTotalDiarioPorMaterial, cirugiasPorDia, leitoUTI, totalDeLavadorasTermo)
+  return {autoclave,lavadora}
 }
 
 export { calcularValores }
