@@ -1,15 +1,15 @@
 import { marcasAutoclaves,  marcasLavadoraTermodesinfectora  } from './marcas.mjs'
 
 const calcularValores = (
-  salaCirugia, // 12
-  cirugiasPorSala, // 6
-  processamentoDeTecidos, // true
-  dia, // 7   //<---
-  cme, // 12  //tempo entre uma limpeza e outra <--
-  leitoUTI, // 30
-  leitoInternacaoRPA, // 149
-  totalDeAutoclaves, // 3     // <--
-  totalDeLavadorasTermo // 2 // <--
+  salaCirugia,
+  cirugiasPorSala,
+  processamentoDeTecidos,
+  dia,
+  cme,
+  leitoUTI,
+  leitoInternacaoRPA,
+  totalDeAutoclaves,
+  totalDeLavadorasTermo
 ) => {
   const volumePorCirugia = 1.5
   const cirugiasPorDia = salaCirugia*cirugiasPorSala

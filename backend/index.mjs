@@ -12,7 +12,7 @@ app.use(cors())
 
 /*[Rota para retornar produto]*/
 app.get('/produto/', async (req, res) => {
-  /* const {
+  const {
     salaCirugia,
     cirugiasPorSala,
     processamentoDeTecidos,
@@ -22,16 +22,7 @@ app.get('/produto/', async (req, res) => {
     leitoInternacaoRPA,
     totalDeAutoclaves,
     totalDeLavadorasTermo
-  } = req.query */
-  const salaCirugia = 12
-  const cirugiasPorSala = 6
-  const processamentoDeTecidos = true
-  const dia = 7
-  const cme = 12
-  const leitoUTI = 30
-  const leitoInternacaoRPA = 149
-  const totalDeAutoclaves = 3
-  const totalDeLavadorasTermo = 2
+  } = req.query
 
   const resultado = calcularValores(
     parseInt(salaCirugia),
@@ -47,6 +38,7 @@ app.get('/produto/', async (req, res) => {
 
   return res.status(200).json(resultado)
 })
+
 
 /* [Inicie o servidor] */
 app.listen(PORT, () => {

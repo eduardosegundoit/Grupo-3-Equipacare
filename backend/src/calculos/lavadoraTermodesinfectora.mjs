@@ -16,16 +16,16 @@ const lavadoraTermodesinfectora = (
   const numeroCirurgiasDia = cirugiasPorDia
   const numeroLeitosUti = leitoUTI
 
-  const numeroBandejasPorUe = 2 // talvez esteja no DB-Mongo
+  const numeroBandejasPorUe = 2
   const capacidadeProcessamentoUeCargaInstrumentos = capacidadeCargaBandejasInstrumentos / numeroBandejasPorUe
   const numeroCiclosNecessariosDiariamenteInstrumentos = producaoUesInstrumentosDia / capacidadeProcessamentoUeCargaInstrumentos
-  const intervaloMedioEntreCiclos = 10 // talvez esteja no DB-Mongo
+  const intervaloMedioEntreCiclos = 10
 
   const tempoNecessarioProcessarDemandaInstrumentosMin = numeroCiclosNecessariosDiariamenteInstrumentos * (tempoMedioCicloInstrumentosCargaMaximaMin + intervaloMedioEntreCiclos)
 
-  const quantidadeTraqueiasPorCirurgia = 3 // talvez esteja no DB-Mongo
+  const quantidadeTraqueiasPorCirurgia = 3
   const quantidadeTraqueiasPorDiaCirurgias = numeroCirurgiasDia * quantidadeTraqueiasPorCirurgia
-  const quantidadeTraqueiasPorLeitoUtiDia = 3 // talvez esteja no DB-Mongo
+  const quantidadeTraqueiasPorLeitoUtiDia = 3
   const quantidadeTraqueiasPorDiaUti = numeroLeitosUti * quantidadeTraqueiasPorLeitoUtiDia
   const quantidadeTraqueiasPorDiaTotal = quantidadeTraqueiasPorDiaCirurgias + quantidadeTraqueiasPorDiaUti
 
@@ -39,7 +39,7 @@ const lavadoraTermodesinfectora = (
   const percentualUtilizacaoCapacidadeMaximaProcessamentoTermos = demandaTempoPorDiaMin / minutosDisponiveisDiariamenteTodosEquipamentos
   const percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado = (percentualUtilizacaoCapacidadeMaximaProcessamentoTermos * 100)
 
-  const resultado = `${marca}, ${modelo}: ${parseInt(minutosDisponiveisDiariamenteTodosEquipamentos)}, ${percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado.toFixed(2)}%`
+  const resultado = `${marca}, ${modelo}: ${parseInt(minutosDisponiveisDiariamenteTodosEquipamentos)} Minutos, ${percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado.toFixed(2)}%`
 
   return resultado
 }

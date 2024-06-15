@@ -33,7 +33,7 @@ const autoclavesVapor = (
   const percentualUtilizacaoMaxima = volumeProcessadoPicoLitros/percentualUtilizacaoCapacidadeAutoclavesPico
   const percentualUtilizacaoMaximaFormatado = percentualUtilizacaoMaxima * 100
 
-  const resultado = `${marca}, ${modelo}: ${parseInt(horasNecessariasParaManutencao)}, ${percentualUtilizacaoMaximaFormatado.toFixed(2)}%`
+  const resultado = `${marca}, ${modelo}: ${parseInt(horasNecessariasParaManutencao)} Horas, ${percentualUtilizacaoMaximaFormatado.toFixed(2)}%`
 
   return resultado
 }
