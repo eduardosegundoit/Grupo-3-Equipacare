@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { calcularValores } from './calculos/calcularValores.mjs'
+import { calcularValores } from './src/calculos/calcularValores.mjs'
 
 const PORT = process.env.PORT || 8080
 
