@@ -1,0 +1,10 @@
+.formHospital {
+    text-align: center;
+    background-color: #466385;
+    padding-bottom: 100px;
+}
+
+.formHospital h1 {
+    font-size: 40px;
+    padding-top: 50px;
+}
