@@ -11,7 +11,7 @@ app.use(cors())
 
 
 /*[Rota para retornar produto]*/
-app.get('/produto/', async (req, res) => {
+app.get('/produto', async (req, res) => {
   const {
     salaCirugia,
     cirugiasPorSala,

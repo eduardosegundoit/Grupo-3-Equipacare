@@ -1,15 +1,5 @@
 #navbar {
-    display: flex;
-    padding: 0.5rem 0rem;
     background-color: #001329;
-    align-items: center;
     color: white;
-    box-shadow: 0px 0px 20px #001329;
-    position: relative;
-}
-
-
-#navbar img {
-    width: 11rem;
-    margin: 1rem 0.2rem 0rem 0.5rem;
+    padding: 1%;
 }
