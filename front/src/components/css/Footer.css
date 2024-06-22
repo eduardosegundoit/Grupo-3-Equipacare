@@ -1,0 +1,29 @@
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #383838;
+    box-shadow: 0px 0px 20px #383838;
+    padding: 2%;
+    /* width: 100%; */
+    margin-top: auto;
+}
+
+#contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    height: 100%;
+}
+
+#socialMedia i {
+    width: 48px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #A7B927;
+    margin: 0.15rem 0rem;
+}
