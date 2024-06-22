@@ -40,8 +40,9 @@ const lavadoraTermodesinfectora = (
   const percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado = (percentualUtilizacaoCapacidadeMaximaProcessamentoTermos * 100)
 
   const resultado = `${marca}, ${modelo}: ${parseInt(minutosDisponiveisDiariamenteTodosEquipamentos)} Minutos, ${percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado.toFixed(2)}%`
-
-  return resultado
+  if ( percentualUtilizacaoCapacidadeMaximaProcessamentoTermosFormatado.toFixed(2) < 90) {
+    return resultado
+  }
 }
 
 export { lavadoraTermodesinfectora }

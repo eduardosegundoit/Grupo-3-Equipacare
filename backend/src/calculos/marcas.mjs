@@ -32,7 +32,7 @@ const marcasAutoclaves = (
         tempoProcedimentoDiarioAquecimentoMin
       )
 
-      resultados.push(resultado)
+      resultado !== undefined && resultados.push(resultado)
     }
   }
 
@@ -74,7 +74,7 @@ const marcasLavadoraTermodesinfectora = (
         tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin
       )
 
-      resultados.push(resultado)
+      resultado !== undefined && resultados.push(resultado)
     }
   }
 

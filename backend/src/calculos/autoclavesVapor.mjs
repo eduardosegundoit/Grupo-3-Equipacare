@@ -35,7 +35,9 @@ const autoclavesVapor = (
 
   const resultado = `${marca}, ${modelo}: ${parseInt(horasNecessariasParaManutencao)} Horas, ${percentualUtilizacaoMaximaFormatado.toFixed(2)}%`
 
-  return resultado
+  if ( percentualUtilizacaoMaximaFormatado.toFixed(2) < 90 &&  parseInt(horasNecessariasParaManutencao) < 20) {
+    return resultado
+  }
 }
 
 export { autoclavesVapor }
