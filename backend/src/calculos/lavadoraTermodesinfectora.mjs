@@ -32,7 +32,7 @@ const lavadoraTermodesinfectora = (
   const numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria = quantidadeTraqueiasPorDiaTotal / capacidadeCargaTraqueias
   const tempoNecessarioProcessarDemandaAssistenciaVentilatoriaMin = numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria * (tempoMedioCicloAssistenciaVentilatoriaCargaMaximaMin  + intervaloMedioEntreCiclos)
 
-  const demandaCiclosPorDia = numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria + numeroCiclosNecessariosDiariamenteInstrumentos
+  // const demandaCiclosPorDia = numeroCiclosNecessariosDiariamenteAssistenciaVentilatoria + numeroCiclosNecessariosDiariamenteInstrumentos
   const demandaTempoPorDiaMin = tempoNecessarioProcessarDemandaInstrumentosMin + tempoNecessarioProcessarDemandaAssistenciaVentilatoriaMin
 
   const minutosDisponiveisDiariamenteTodosEquipamentos = 60 * 24 * totalDeLavadorasTermo

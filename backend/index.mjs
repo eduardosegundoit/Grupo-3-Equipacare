@@ -12,31 +12,33 @@ app.use(cors())
 
 /*[Rota para retornar produto]*/
 app.get('/produto', async (req, res) => {
-  const {
-    salaCirugia,
-    cirugiasPorSala,
-    processamentoDeTecidos,
-    dia,
-    cme,
-    leitoUTI,
-    leitoInternacaoRPA,
-    totalDeAutoclaves,
-    totalDeLavadorasTermo
-  } = req.query
+  try {
+    const {
+      salaCirugia,
+      cirugiasPorSala,
+      processamentoDeTecidos,
+      cme,
+      leitoUti,
+      leitoRpa,
+      totalDeAutoclaves,
+      totalDeLavadorasTermo
+    } = req.query
 
-  const resultado = calcularValores(
-    parseInt(salaCirugia),
-    parseInt(cirugiasPorSala),
-    processamentoDeTecidos,
-    parseInt(dia),
-    parseInt(cme),
-    parseInt(leitoUTI),
-    parseInt(leitoInternacaoRPA),
-    parseInt(totalDeAutoclaves),
-    parseInt(totalDeLavadorasTermo)
-  )
+    const resultado = calcularValores(
+      parseInt(salaCirugia),
+      parseInt(cirugiasPorSala),
+      processamentoDeTecidos,
+      parseInt(cme),
+      parseInt(leitoUti),
+      parseInt(leitoRpa),
+      parseInt(totalDeAutoclaves),
+      parseInt(totalDeLavadorasTermo)
+    )
 
-  return res.status(200).json(resultado)
+    return res.status(200).json(resultado)
+  } catch (error) {
+    return res.status(500).json({ error: 'Erro ao solicitar o calculo' })
+  }
 })
 
 

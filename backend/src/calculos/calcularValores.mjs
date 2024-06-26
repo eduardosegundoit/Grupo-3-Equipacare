@@ -4,7 +4,6 @@ const calcularValores = (
   salaCirugia,
   cirugiasPorSala,
   processamentoDeTecidos,
-  dia,
   cme,
   leitoUTI,
   leitoInternacaoRPA,

@@ -8,39 +8,48 @@ import { useNavigate } from 'react-router-dom'
 
 const PrimeirosDadosDoHospital = () => {
   const navigate = useNavigate()
+  const json =  JSON.parse(localStorage.getItem('formulario1'))
 
   const initialValues = {
-    possui: false,
-    ampliacao: false,
-    nomeDoHospital: '',
-    cnpj: '',
-    email: '',
-    telefone: '',
-    nome: '',
-    cargo: '',
-    cep: '',
-    cidade: '',
-    uf: '',
-    salasDeCirugias: '',
-    numeroDeCirugias: '',
-    processamentoDeTecidos: false,
-    intervaloCme: '',
-    diasDaSemana: []
+    possui: json.possui || false,
+    ampliacao:  json.ampliacao || false,
+    salasDeCirugias: json.salaCirugia || 0,
+    numeroDeCirugias: json.cirugiasPorSala || 0,
+    processamentoDeTecidos: json.processamentoDeTecidos || false,
+    intervaloCme: json.cme || 0,
+    diasDaSemana: json.diasDaSemana || []
   }
 
   const validationSchema = Yup.object({
-    nome: Yup.string().min(3, 'O campo deve ter no mínimo 3 caracteres').required('Campo obrigatório'),
-    possui: Yup.boolean().oneOf([true, false], 'Selecione uma opção').required('Selecione uma opção'),
-    ampliacao: Yup.boolean().oneOf([true, false], 'Selecione uma opção').required('Selecione uma opção'),
-    email: Yup.string().email('E-mail inválido').required('Campo obrigatório'),
-    telefone: Yup.string().max(13, 'O campo deve ter no máximo 13 caracteres').required('Campo obrigatório')
+    possui: Yup.boolean().required('Selecione uma opção'),
+    ampliacao: Yup.boolean().required('Selecione uma opção'),
+    salasDeCirugias: Yup.number().min(1, 'Deve ser maior que 0').required('Campo obrigatório'),
+    numeroDeCirugias: Yup.number().min(1, 'Deve ser maior que 0').required('Campo obrigatório'),
+    processamentoDeTecidos: Yup.boolean().required('Selecione uma opção'),
+    intervaloCme: Yup.number().min(1, 'Deve ser maior que 0').required('Campo obrigatório'),
+    diasDaSemana: Yup.array().min(1, 'Selecione pelo menos um dia da semana').required('Campo obrigatório')
   })
 
   const handleSaveToLocalStorage = (values) => {
-    localStorage.setItem('formulario1', JSON.stringify(values))
+    const existingValues = JSON.parse(localStorage.getItem('formulario1')) || {}
+    const newValues = {
+      possui: document.querySelector('input[name="possui"]').checked,
+      ampliacao: document.querySelector('input[name="ampliacao"]').checked,
+      salaCirugia:  document.querySelector('#salasDeCirugias').value,
+      cirugiasPorSala:  document.querySelector('#numeroDeCirugias').value,
+      processamentoDeTecidos:   document.querySelector('input[name="processamentoDeTecidos"]').checked,
+      cme: document.querySelector('#intervaloCme').value,
+      diasDaSemana: values.diasDaSemana
+    }
+    const updatedValues = { ...existingValues, ...newValues }
+    localStorage.setItem('formulario1', JSON.stringify(updatedValues))
   }
 
   const handleSubmit = (values, { setSubmitting }) => {
+    values.salasDeCirugias = parseInt(values.salasDeCirugias)
+    values.numeroDeCirugias = parseInt(values.numeroDeCirugias)
+    values.intervaloCme = parseInt(values.intervaloCme)
+
     handleSaveToLocalStorage(values)
     setSubmitting(false)
     navigate('/hospital2')
@@ -50,9 +59,9 @@ const PrimeirosDadosDoHospital = () => {
     <Container>
       <Content>
         <Formik
+          onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
         >
           {({ values, isSubmitting }) => (
             <Form style={{ width: '90%' }}>
@@ -82,8 +91,18 @@ const PrimeirosDadosDoHospital = () => {
               </Row>
 
               <Row>
-                <Input name="salasDeCirugias" label="Salas de cirurgia" type="number" required />
-                <Input name="numeroDeCirugias" label="Número de cirurgias" type="number" required />
+                <Input
+                  name="salasDeCirugias" 
+                  label="Salas de cirurgia" 
+                  type="number"
+                  required
+                />
+                <Input 
+                  name="numeroDeCirugias"
+                  label="Número de cirurgias"
+                  type="number"
+                  required
+                />
               </Row>
 
               <Row>
@@ -102,14 +121,20 @@ const PrimeirosDadosDoHospital = () => {
               <Row>
                 <DiasDaSemana />
               </Row>
-
               <Row>
-                <Input name="intervaloCme" type="number" label="Qual o intervalo de pico de funcionamento da CME?" required />
+                <Input 
+                  name="intervaloCme" 
+                  type="number" 
+                  label="Qual o intervalo de pico de funcionamento da CME?" 
+                  required
+                />
               </Row>
-
               <Footer>
+                <Button type='button' onClick={() => navigate('/')}>
+                  back
+                </Button>
                 <Button type="submit" disabled={isSubmitting}>
-                  Salvar
+                  next
                 </Button>
               </Footer>
             </Form>

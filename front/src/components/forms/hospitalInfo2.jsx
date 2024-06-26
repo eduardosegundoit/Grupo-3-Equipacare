@@ -1,33 +1,64 @@
+import React from 'react'
 import { Form, Formik } from "formik"
 import { Input } from "./../input"
-import { Calculo } from "./../forms/axios"
+import { Calculo, Macaco } from "./../forms/axios"
 import * as Yup from"yup"
 import { Container, Content, Row, Footer, Button } from './StyledComponents'
+import { useNavigate } from 'react-router-dom'
 
 const segundosDadosDoHospital = () => {
+  const navigate = useNavigate()
+  const json =  JSON.parse(localStorage.getItem('formulario1'))
+
   const initialValues = {
-    nomeDoHospital: "",
-    cnpj: "",
-    email: "",
-    telefone: "",
-    nome: "",
-    cargo: "",
-    cep: "",
-    cidade: "",
-    uf: "",
+    leitoUti: json.leitoUti || 0,
+    leitoInternacao: json.leitoUti || 0,
+    leitoRpa: json.leitoUti || 0,
+    leitoobservacao: json.leitoUti || 0,
+    leitoHospitalDia: json.leitoUti || 0,
+    totalDeAutoclaves: json.leitoUti || 0,
+    totalDeLavadorasTermo: json.leitoUti || 0
   }
 
   const validationSchema = Yup.object({
-    nome: Yup.string().min(3, "O campo deve ter no mínimo 3 caracteres").required("Campo obrigatório"),
-
-    email: Yup.string().email("E-mail inválido").required("Campo obrigatório"),
-
-    telefone: Yup.string().max(13, "O campo deve ter no máximo 13 caracteres").required("Campo obrigatório"),
+    leitoUti: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    leitoInternacao: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    leitoRpa: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    leitoobservacao: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    leitoHospitalDia: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    totalDeAutoclaves: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
+    totalDeLavadorasTermo: Yup.number().required("Campo obrigatório").min(1, "Deve ser maior que 0"),
   })
 
-  const handleSubmit = (values,{setSubmitting}) => {
-    console.log(values)
-    setSubmitting(false)
+
+  const handleSaveToLocalStorage = () => {
+    const existingValues = JSON.parse(localStorage.getItem('formulario1')) || {}
+    const newValues = {
+      leitoUti: document.querySelector('#leitoUti').value,
+      leitoInternacao: document.querySelector('#leitoInternacao').value,
+      leitoRpa: document.querySelector('#leitoRpa').value,
+      leitoobservacao: document.querySelector('#leitoobservacao').value,
+      leitoHospitalDia: document.querySelector('#leitoHospitalDia').value,
+      totalDeAutoclaves: document.querySelector('#totalDeAutoclaves').value,
+      totalDeLavadorasTermo: document.querySelector('#totalDeLavadorasTermo').value,
+    }
+    const updatedValues = { ...existingValues, ...newValues }
+    localStorage.setItem('formulario1', JSON.stringify(updatedValues))
+  }
+
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      handleSaveToLocalStorage()
+
+      await Calculo()
+      await Macaco()
+      laco(Calculo)
+      setSubmitting(false)
+    } catch (error) {
+      console.error('Error during calculation:', error)
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -58,7 +89,10 @@ const segundosDadosDoHospital = () => {
                 <Input name="totalDeLavadorasTermo" label="total de lavadoras termo" type="number" required />
               </Row>
               <Footer>
-                <Button type="submit" disabled={isSubmitting} onClick={Calculo}>
+                <Button type='button' onClick={() => navigate('/hospital1') }>
+                  back
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
                   Salvar
                 </Button>
               </Footer>

@@ -71,7 +71,7 @@ export const DiasDaSemana = () => {
 
   return (
     <div>
-      <p>As cirurgias serão realizadas em quais dias da semana? {values.diasDaSemana.length}</p>
+      <p>As cirurgias serão realizadas em quais dias da semana? {values.diasDaSemana.length >= 8? 7:values.diasDaSemana.length}</p>
 
       <Container>
         <div>

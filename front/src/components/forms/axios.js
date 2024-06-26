@@ -1,37 +1,90 @@
 import axios from 'axios'
 
-const Calculo = () => {
+const Calculo = async () => {
+
   const formulario1Values = JSON.parse(localStorage.getItem('formulario1'))
   if (!formulario1Values) {
     console.error('No values found in local storage')
-    return
+    return Promise.reject(new Error('No values found in local storage'))
   }
   const dados = {
-    // salaCirugia:  document.querySelector('#salasDeCirugias').value,
-    // cirugiasPorSala:  document.querySelector('#numeroDeCirugias').value,
-    // processamentoDeTecidos:   document.querySelector('input[name="processamentoDeTecidos"]').checked,
-    // dia: values.diasDaSemana.length,
-    ...formulario1Values,
-    cme:  document.querySelector('#intervaloCme').value,
-    leitoUTI: document.querySelector('#leitoUti').value,
-    leitoInternacaoRPA:  document.querySelector('#leitoRpa').value,
-    totalDeAutoclaves:  document.querySelector('#totalDeAutoclaves').value,
-    totalDeLavadorasTermo:  document.querySelector('#totalDeLavadorasTermo').value,
+    salaCirugia: formulario1Values.salaCirugia,
+    cirugiasPorSala: formulario1Values.cirugiasPorSala,
+    processamentoDeTecidos: formulario1Values.processamentoDeTecidos,
+    cme: formulario1Values.cme,
+    leitoUti: formulario1Values.leitoUti,
+    leitoRpa: formulario1Values.leitoRpa,
+    totalDeAutoclaves: formulario1Values.totalDeAutoclaves,
+    totalDeLavadorasTermo: formulario1Values.totalDeLavadorasTermo
   }
 
-  const queryString = Object.keys(dados)
-  .map(key => `${key}=${encodeURIComponent(params[key])}`)
-  .join('&')
+  try {
+    const queryString = Object.keys(dados)
+    .map(key => `${key}=${encodeURIComponent(dados[key])}`)
+    .join('&')
 
-  const url = `http://localhost:8080/produto/?${queryString}`
+    const url = `http://localhost:8080/produto/?${queryString}`
 
-  return axios.get(url)
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(error => {
-      console.error('There was an error!', error)
-    })
+    return axios.get(url)
+      .then(response => {
+        console.log(response.data)
+        return response.data
+      })
+      .catch(error => {
+        console.error('There was an error!', error)
+        throw error
+      })
+  } catch (error) {
+    console.error("Erro ao solicitar o calculo:", error.message)
+  }
 }
 
-export { Calculo }
+
+const Macaco = async () => {
+  const formulario1Values = JSON.parse(localStorage.getItem('formulario1'))
+  if (!formulario1Values) {
+    console.error('No values found in local storage')
+    return Promise.reject(new Error('No values found in local storage'))
+  }
+
+  const data = {
+    nomeDoHospital: formulario1Values.nomeDoHospital,
+    cnpj: formulario1Values.cnpj,
+    email: formulario1Values.email,
+    telefone: formulario1Values.telefone,
+    nome: formulario1Values.nome,
+    cargo: formulario1Values.cargo,
+    cep: formulario1Values.cep,
+    cidade: formulario1Values.cidade,
+    uf: formulario1Values.uf,
+
+    possui: formulario1Values.possui,
+    ampliacao:  formulario1Values.ampliacao,
+    salaCirugia: formulario1Values.salaCirugia,
+    cirugiasPorSala: formulario1Values.cirugiasPorSala,
+    processamentoDeTecidos: formulario1Values.processamentoDeTecidos,
+    dia:formulario1Values.diasDaSemana.length >= 8 ? 7 :formulario1Values.diasDaSemana.length,
+    cme: formulario1Values.cme,
+
+    leitoUti: formulario1Values.leitoUti,
+    leitoInternacao: formulario1Values.leitoUti,
+    leitoRpa: formulario1Values.leitoRpa,
+    leitoobservacao: formulario1Values.leitoUti,
+    leitoHospitalDia: formulario1Values.leitoUti,
+    totalDeAutoclaves: formulario1Values.totalDeAutoclaves,
+    totalDeLavadorasTermo: formulario1Values.totalDeLavadorasTermo
+  }
+
+  try {
+    axios.post('https://api.sheetmonkey.io/form/f5ruNmtgUkGwmdC9sMmWHN',  data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (error) {
+    console.error("Erro ao enviar os dados:", error.message)
+  }
+}
+
+
+export { Calculo, Macaco }
