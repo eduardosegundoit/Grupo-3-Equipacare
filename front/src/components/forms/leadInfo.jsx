@@ -11,15 +11,15 @@ const Lead = () => {
   const json =  JSON.parse(localStorage.getItem('formulario1'))
 
   const initialValues = {
-    nomeDoHospital: json.nomeDoHospital || '',
-    cnpj: json.cnpj || '',
-    email: json.email || '',
-    telefone: json.telefone || '',
-    nome: json.nome || '',
-    cargo: json.cargo || '',
-    cep: json.cep || '',
-    cidade: json.cidade || '',
-    uf: json.uf || '',
+    nomeDoHospital: json?.nomeDoHospital ?? '',
+    cnpj: json?.cnpj ?? '',
+    email: json?.email ?? '',
+    telefone: json?.telefone ?? '',
+    nome: json?.nome ?? '',
+    cargo: json?.cargo ?? '',
+    cep: json?.cep ?? '',
+    cidade: json?.cidade ?? '',
+    uf: json?.uf ?? '',
   }
 
 
@@ -119,7 +119,7 @@ const Lead = () => {
 
               <Footer>
                 <Button type="submit" disabled={isSubmitting}>
-                  Salvar
+                  proximo
                 </Button>
               </Footer>
             </Form>

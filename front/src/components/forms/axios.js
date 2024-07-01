@@ -7,6 +7,8 @@ const Calculo = async () => {
     console.error('No values found in local storage')
     return Promise.reject(new Error('No values found in local storage'))
   }
+
+
   const dados = {
     salaCirugia: formulario1Values.salaCirugia,
     cirugiasPorSala: formulario1Values.cirugiasPorSala,
@@ -24,16 +26,15 @@ const Calculo = async () => {
     .join('&')
 
     const url = `http://localhost:8080/produto/?${queryString}`
+    const response = await axios.get(url)
+    const { autoclave, lavadora } = response.data
 
-    return axios.get(url)
-      .then(response => {
-        console.log(response.data)
-        return response.data
-      })
-      .catch(error => {
-        console.error('There was an error!', error)
-        throw error
-      })
+    if (!autoclave || !lavadora) {
+      throw new Error('autoclave or lavadora is undefined')
+    }
+
+    return {autoclave, lavadora}
+
   } catch (error) {
     console.error("Erro ao solicitar o calculo:", error.message)
   }

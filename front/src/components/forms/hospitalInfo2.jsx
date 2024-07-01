@@ -11,13 +11,13 @@ const segundosDadosDoHospital = () => {
   const json =  JSON.parse(localStorage.getItem('formulario1'))
 
   const initialValues = {
-    leitoUti: json.leitoUti || 0,
-    leitoInternacao: json.leitoUti || 0,
-    leitoRpa: json.leitoUti || 0,
-    leitoobservacao: json.leitoUti || 0,
-    leitoHospitalDia: json.leitoUti || 0,
-    totalDeAutoclaves: json.leitoUti || 0,
-    totalDeLavadorasTermo: json.leitoUti || 0
+    leitoUti: json?.leitoUti ?? 0,
+    leitoInternacao: json?.leitoUti ?? 0,
+    leitoRpa: json?.leitoUti ?? 0,
+    leitoobservacao: json?.leitoUti ?? 0,
+    leitoHospitalDia: json?.leitoUti ?? 0,
+    totalDeAutoclaves: json?.leitoUti ?? 0,
+    totalDeLavadorasTermo: json?.leitoUti ?? 0
   }
 
   const validationSchema = Yup.object({
@@ -51,10 +51,13 @@ const segundosDadosDoHospital = () => {
     try {
       handleSaveToLocalStorage()
 
-      await Calculo()
       await Macaco()
-      laco(Calculo)
+      const calculoResult = await Calculo()
+      const { autoclave, lavadora } = calculoResult
+      navigate('/tabela', { state: { autoclave, lavadora } })
+
       setSubmitting(false)
+
     } catch (error) {
       console.error('Error during calculation:', error)
       setSubmitting(false)
@@ -65,6 +68,7 @@ const segundosDadosDoHospital = () => {
     <Container>
       <Content>
         <Formik
+          id='form'
           onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -90,10 +94,10 @@ const segundosDadosDoHospital = () => {
               </Row>
               <Footer>
                 <Button type='button' onClick={() => navigate('/hospital1') }>
-                  back
+                  voltar
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
-                  Salvar
+                  proximo
                 </Button>
               </Footer>
             </Form>

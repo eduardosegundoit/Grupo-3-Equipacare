@@ -11,13 +11,13 @@ const PrimeirosDadosDoHospital = () => {
   const json =  JSON.parse(localStorage.getItem('formulario1'))
 
   const initialValues = {
-    possui: json.possui || false,
-    ampliacao:  json.ampliacao || false,
-    salasDeCirugias: json.salaCirugia || 0,
-    numeroDeCirugias: json.cirugiasPorSala || 0,
-    processamentoDeTecidos: json.processamentoDeTecidos || false,
-    intervaloCme: json.cme || 0,
-    diasDaSemana: json.diasDaSemana || []
+    possui: json?.possui ?? false,
+    ampliacao:  json?.ampliacao ?? false,
+    salasDeCirugias: json?.salaCirugia ?? 0,
+    numeroDeCirugias: json?.cirugiasPorSala ?? 0,
+    processamentoDeTecidos: json?.processamentoDeTecidos ?? false,
+    intervaloCme: json?.cme ?? 0,
+    diasDaSemana: json?.diasDaSemana ?? []
   }
 
   const validationSchema = Yup.object({
@@ -131,10 +131,10 @@ const PrimeirosDadosDoHospital = () => {
               </Row>
               <Footer>
                 <Button type='button' onClick={() => navigate('/')}>
-                  back
+                  voltar
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
-                  next
+                  proximo
                 </Button>
               </Footer>
             </Form>
